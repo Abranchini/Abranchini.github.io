@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>PedroAbranches</title>
-    <link>https://Abranchini.github.io/</link>
-      <atom:link href="https://Abranchini.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <description>PedroAbranches</description>
+    <title>Rui DM Travasso | PedroAbranches</title>
+    <link>https://Abranchini.github.io/authors/rui-dm-travasso/</link>
+      <atom:link href="https://Abranchini.github.io/authors/rui-dm-travasso/index.xml" rel="self" type="application/rss+xml" />
+    <description>Rui DM Travasso</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 20 May 2020 22:56:02 +0200</lastBuildDate>
     <image>
       <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
-      <title>PedroAbranches</title>
-      <link>https://Abranchini.github.io/</link>
+      <title>Rui DM Travasso</title>
+      <link>https://Abranchini.github.io/authors/rui-dm-travasso/</link>
     </image>
     
     <item>
@@ -17,22 +17,6 @@
       <link>https://Abranchini.github.io/publication/localized-redox-relays-as-a-privileged-mode-of-cytoplasmic-hydrogen-peroxide-signaling/</link>
       <pubDate>Wed, 20 May 2020 22:56:02 +0200</pubDate>
       <guid>https://Abranchini.github.io/publication/localized-redox-relays-as-a-privileged-mode-of-cytoplasmic-hydrogen-peroxide-signaling/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Causal Brain</title>
-      <link>https://Abranchini.github.io/project/fmri/</link>
-      <pubDate>Wed, 20 May 2020 21:19:07 +0200</pubDate>
-      <guid>https://Abranchini.github.io/project/fmri/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Building Pandora</title>
-      <link>https://Abranchini.github.io/project/pandora/</link>
-      <pubDate>Wed, 20 May 2020 20:52:24 +0200</pubDate>
-      <guid>https://Abranchini.github.io/project/pandora/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Foundations | PedroAbranches</title>
+    <link>https://Abranchini.github.io/tags/foundations/</link>
+      <atom:link href="https://Abranchini.github.io/tags/foundations/index.xml" rel="self" type="application/rss+xml" />
+    <description>Foundations</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 20 May 2020 20:52:24 +0200</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Foundations</title>
+      <link>https://Abranchini.github.io/tags/foundations/</link>
+    </image>
+    
+    <item>
+      <title>Building Pandora</title>
+      <link>https://Abranchini.github.io/project/pandora/</link>
+      <pubDate>Wed, 20 May 2020 20:52:24 +0200</pubDate>
+      <guid>https://Abranchini.github.io/project/pandora/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

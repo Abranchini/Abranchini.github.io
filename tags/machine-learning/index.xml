@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning | PedroAbranches</title>
+    <link>https://Abranchini.github.io/tags/machine-learning/</link>
+      <atom:link href="https://Abranchini.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <description>Machine Learning</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 20 May 2020 21:19:07 +0200</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Machine Learning</title>
+      <link>https://Abranchini.github.io/tags/machine-learning/</link>
+    </image>
+    
+    <item>
+      <title>Causal Brain</title>
+      <link>https://Abranchini.github.io/project/fmri/</link>
+      <pubDate>Wed, 20 May 2020 21:19:07 +0200</pubDate>
+      <guid>https://Abranchini.github.io/project/fmri/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
