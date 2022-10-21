@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Andreas Loukas | PedroAbranches</title>
+    <link>https://Abranchini.github.io/authors/andreas-loukas/</link>
+      <atom:link href="https://Abranchini.github.io/authors/andreas-loukas/index.xml" rel="self" type="application/rss+xml" />
+    <description>Andreas Loukas</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sat, 20 Mar 2021 22:56:02 +0200</lastBuildDate>
+    <image>
+      <url>img/map[gravatar:%!s(bool=false) shape:circle]</url>
+      <title>Andreas Loukas</title>
+      <link>https://Abranchini.github.io/authors/andreas-loukas/</link>
+    </image>
+    
+    <item>
+      <title>GG-GAN: A Geometric Graph Generative Adversarial Network</title>
+      <link>https://Abranchini.github.io/publication/gggan/</link>
+      <pubDate>Sat, 20 Mar 2021 22:56:02 +0200</pubDate>
+      <guid>https://Abranchini.github.io/publication/gggan/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

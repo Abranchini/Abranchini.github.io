@@ -1,106 +1,79 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
+    <loc>https://Abranchini.github.io/publication_types/3/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/authors/andreas-loukas/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/authors/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/publication/gggan/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/authors/igor-krawczuk/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/authors/pedro-abranches/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/publication_types/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/publication/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
+    <loc>https://Abranchini.github.io/authors/volkan-cevher/</loc>
+    <lastmod>2021-03-20T22:56:02+02:00</lastmod>
+  </url><url>
     <loc>https://Abranchini.github.io/publication_types/2/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/authors/anahita-bayani/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/authors/armindo-salvador/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://Abranchini.github.io/authors/</loc>
-    <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/authors/fernando-sampaio-dos-aidos/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/publication/localized-redox-relays-as-a-privileged-mode-of-cytoplasmic-hydrogen-peroxide-signaling/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://Abranchini.github.io/authors/pedro-abranches/</loc>
-    <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://Abranchini.github.io/</loc>
-    <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://Abranchini.github.io/publication_types/</loc>
-    <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://Abranchini.github.io/publication/</loc>
-    <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/authors/rui-dm-travasso/</loc>
     <lastmod>2020-05-20T22:56:02+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/project/fmri/</loc>
     <lastmod>2020-05-20T21:19:07+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/tags/machine-learning/</loc>
     <lastmod>2020-05-20T21:19:07+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/project/</loc>
     <lastmod>2020-05-20T21:19:07+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/tags/</loc>
     <lastmod>2020-05-20T21:19:07+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/project/pandora/</loc>
     <lastmod>2020-05-20T20:52:24+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/tags/foundations/</loc>
     <lastmod>2020-05-20T20:52:24+02:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/authors/admin/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/post/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://Abranchini.github.io/talk/</loc>
   </url>
-  
 </urlset>
