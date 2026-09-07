@@ -1,0 +1,969 @@
+/* =========================================================================
+   custom.css — hand-written overrides on top of the Academic 4.8.0 theme.
+   Nothing here comes from Hugo. This file is loaded AFTER css/academic.css,
+   so anything declared here wins.
+
+   Sections:
+     1. Palette
+     2. Page background
+     3. Section headings (centred label between rules)
+     4. Cards (projects + publications share one look)
+     5. Publications as a card grid
+     6. Small fixes
+   ========================================================================= */
+
+/* ---- 1. Palette --------------------------------------------------------- */
+
+:root {
+  --accent:        #268199;   /* teal, already used for links in the bio  */
+  --accent-deep:   #096f88;
+  --accent-warm:   #d06e74;   /* rose, used for lab names in the bio      */
+
+  --card-bg:       #ffffff;
+  --card-border:   rgba(0, 0, 0, 0.09);
+  --card-shadow:   0 1px 3px rgba(0, 0, 0, 0.06);
+  --card-shadow-h: 0 14px 30px rgba(0, 0, 0, 0.13);
+  --rule:          rgba(0, 0, 0, 0.14);
+  --label:         rgba(0, 0, 0, 0.62);
+  --body-text:     rgba(0, 0, 0, 0.72);
+}
+
+body.dark {
+  --card-bg:       #22252d;
+  --card-border:   #383d4a;
+  --card-shadow:   0 1px 3px rgba(0, 0, 0, 0.35);
+  --card-shadow-h: 0 14px 30px rgba(0, 0, 0, 0.5);
+  --rule:          rgba(255, 255, 255, 0.16);
+  --label:         rgba(255, 255, 255, 0.62);
+  --body-text:     rgba(255, 255, 255, 0.74);
+}
+
+/* ---- 2. Page background ------------------------------------------------- */
+/* Moved: the page background now lives in section 8, which is the single
+   place that sets it. Nothing here.                                        */
+
+/* ---- 3. Section headings ------------------------------------------------ */
+/* Was: heading parked in a narrow left-hand column.
+   Now: a centred, letter-spaced label with a rule running out either side.  */
+
+.section-heading {
+  text-align: center;
+}
+
+.section-heading h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+
+  margin: 0 0 3.25rem 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--label);
+}
+
+.section-heading h1::before,
+.section-heading h1::after {
+  content: "";
+  flex: 1 1 0;
+  max-width: 300px;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* On narrow screens the rules eat the label — shorten them. */
+@media (max-width: 575px) {
+  .section-heading h1 {
+    gap: 0.9rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    margin-bottom: 2.25rem;
+  }
+  .section-heading h1::before,
+  .section-heading h1::after { max-width: 40px; }
+}
+
+/* ---- 4. Cards ----------------------------------------------------------- */
+/* One shared look for project cards and publication cards. */
+
+.card,
+.pub-grid .media.stream-item {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.dark .card { background: var(--card-bg); }
+
+/* Lift only the project/publication cards — not author cards or the cite modal. */
+.project-card .card:hover,
+.pub-grid .media.stream-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-h);
+  border-color: var(--accent);
+}
+
+.project-card .card .card-image img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+
+.project-card .card .card-text   { padding: 1.1rem 1.25rem 1.25rem; }
+.project-card .card h4           { font-size: 0.82rem; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+.project-card .card .card-text p { font-size: 0.82rem; line-height: 1.55; color: var(--body-text); }
+
+.project-card .card h4 a,
+.dark .project-card .card h4 a { color: inherit; border-bottom: solid 1px transparent; }
+.project-card .card h4 a:hover,
+.dark .project-card .card h4 a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.project-card.project-item { margin: 0 0 30px 0; }
+
+/* ---- 5. Publications as a card grid ------------------------------------- */
+/* The theme renders each publication as a horizontal row: text on the left,
+   a 150px thumbnail on the right. `column-reverse` lifts that thumbnail to
+   the top of the card, which turns the row into a card — no markup surgery. */
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.pub-grid .media.stream-item {
+  display: flex;
+  flex-direction: column-reverse;   /* image is the 2nd child -> lands on top */
+  margin-bottom: 0;
+}
+
+/* The figure spans the full card width at its own aspect ratio — these are
+   diagrams, so cropping them to a fixed height loses the content.          */
+.pub-grid .media.stream-item > .ml-3,
+.pub-grid .media.stream-item > .ml-3 > a {
+  display: block;
+  width: 100%;
+  margin-left: 0 !important;
+}
+
+.pub-grid .media.stream-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;                  /* theme caps these at 150px */
+  object-fit: contain;
+  background: #ffffff;              /* figures are transparent PNGs */
+  border-bottom: 2px solid var(--card-border);
+}
+
+/* Cards start at the top of their grid row so ragged heights look intentional. */
+.pub-grid { align-items: start; }
+
+.pub-grid .media.stream-item > .media-body {
+  padding: 1.15rem 1.25rem 1.3rem;
+}
+
+.pub-grid .media.stream-item .article-title {
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+.pub-grid .media.stream-item .article-title a { color: inherit; }
+.pub-grid .media.stream-item .article-title a:hover { color: var(--accent); }
+
+.pub-grid .media.stream-item .article-style {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--body-text);
+}
+
+.pub-grid .media.stream-item .btn-links { margin-top: 0.9rem; }
+
+/* ---- 6. Small fixes ----------------------------------------------------- */
+
+/* Project filter buttons: pills that match the accent instead of Bootstrap blue. */
+.project-filters .btn-primary {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  color: var(--label);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.35rem 1.1rem;
+}
+.project-filters .btn-primary:hover,
+.project-filters .btn-primary.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.project-toolbar { margin-bottom: 2rem; text-align: center; }
+.project-filters .btn-toolbar { justify-content: center; }
+
+/* =========================================================================
+   7. 8-BIT LAYER
+   Self-contained on purpose: delete everything below this banner and the
+   site returns to the plain design above. Turn it down by removing
+   individual rules — the pixel font and the hard shadows are separable.
+   ========================================================================= */
+
+:root {
+  --font-pixel:    "Press Start 2P", "Courier New", monospace;
+  --pixel-shadow:  #1b1f27;                    /* hard drop shadow, light mode */
+  --pixel-edge:    rgba(0, 0, 0, 0.85);        /* card outline, light mode     */
+}
+
+body.dark {
+  --pixel-shadow:  rgba(38, 129, 153, 0.55);   /* black would vanish on dark   */
+  --pixel-edge:    #3f4757;
+}
+
+/* ---- Blocky surfaces: square corners, hard outline, offset shadow ------- */
+
+.project-card .card,
+.pub-grid .media.stream-item,
+.project-filters .btn-primary,
+.btn-links .btn,
+.pub-grid .media.stream-item img {
+  border-radius: 0 !important;
+}
+
+.project-card .card,
+.pub-grid .media.stream-item {
+  border: 2px solid var(--pixel-edge);
+  box-shadow: 6px 6px 0 var(--pixel-shadow);
+}
+
+/* Hover = the button gets pressed: card slides into its own shadow. */
+.project-card .card:hover,
+.pub-grid .media.stream-item:hover {
+  transform: translate(3px, 3px);
+  box-shadow: 3px 3px 0 var(--pixel-shadow);
+  border-color: var(--accent);
+}
+
+/* ---- Pixel type ---------------------------------------------------------
+   Only on short strings. Press Start 2P is very wide and has no lowercase
+   rhythm, so body copy and publication titles stay in the readable face.  */
+
+.section-heading h1 {
+  font-family: var(--font-pixel);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;   /* the face is already blocky; less tracking */
+  line-height: 1.6;
+}
+
+.navbar-brand,
+.project-card .card h4,
+.project-filters .btn-primary,
+.btn-links .btn,
+.portrait-title h2 {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+}
+
+.navbar-brand          { font-size: 0.82rem; letter-spacing: 0; }
+.portrait-title h2     { font-size: 1.05rem; line-height: 1.75; letter-spacing: 0; }
+.project-card .card h4 { font-size: 0.66rem; line-height: 1.8; letter-spacing: 0; }
+
+.project-filters .btn-primary,
+.btn-links .btn {
+  font-size: 0.6rem;
+  letter-spacing: 0;
+  border-radius: 0;
+  border: 2px solid var(--pixel-edge);
+  box-shadow: 3px 3px 0 var(--pixel-shadow);
+  padding: 0.55rem 1rem;
+}
+
+.project-filters .btn-primary:hover,
+.project-filters .btn-primary.active,
+.btn-links .btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--pixel-shadow);
+}
+
+@media (max-width: 575px) {
+  .section-heading h1    { font-size: 0.6rem; }
+  .portrait-title h2     { font-size: 0.85rem; }
+}
+
+/* ---- Dashed pixel rules either side of the section label --------------- */
+/* A repeating gradient gives hard-edged dashes — a CSS dotted border blurs. */
+
+.section-heading h1::before,
+.section-heading h1::after {
+  height: 4px;
+  background: repeating-linear-gradient(
+    to right,
+    var(--rule) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+/* ---- Avatar: square sprite with a hard border, not a soft circle -------- */
+
+.avatar.avatar-circle {
+  border-radius: 0;
+  border: 3px solid var(--pixel-edge);
+  box-shadow: 6px 6px 0 var(--pixel-shadow);
+}
+
+
+/* =========================================================================
+   8. BACKGROUND — the pixel grid, with scattered blue cells fading out
+
+   Four layers, top to bottom:
+     1-2  the 32px grid lines, uniform across the whole page
+     3    a left-to-right wash in the page colour, opaque by 34%
+     4    a 2400x2048 tile of blue cells on the same 32px lattice
+   The wash sits BELOW the grid but ABOVE the blue cells, so the grid stays
+   visible everywhere while only the blue vanishes — well before the text
+   column, so it never fights the reading.
+
+   The tile is deliberately larger than any viewport and the background is
+   `fixed`, so it never repeats on screen. Cell density decays to the right
+   (299 cells, exp(-col/13)) so the field thins out on its own.
+
+   NOTE ON SELECTORS: the theme ships `body.dark { background: #282a36 }` —
+   a shorthand, so it resets background-size/repeat/attachment, and at
+   (0,1,1) it outranks a plain `body` rule. Hence `body#top`, with every
+   sub-property repeated in both rules. Do not simplify this back to `body`.
+
+   Grid spacing -> the 32px pairs. Fade point -> the 34%.
+   ========================================================================= */
+
+body#top {
+  background-color: #fbfaf8;
+  background-image:
+    repeating-linear-gradient(to right,  rgba(127,127,127,0.05) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(to bottom, rgba(127,127,127,0.05) 0 1px, transparent 1px 32px),
+    linear-gradient(to right, rgba(251, 250, 248, 0) 0%, rgba(251, 250, 248, 1) 34%),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%272400%27%20height%3D%272048%27%20viewBox%3D%270%200%202400%202048%27%3E%3Cpath%20d%3D%27M0%20160h32v32h-32zM0%20192h32v32h-32zM0%20256h32v32h-32zM0%20288h32v32h-32zM0%20320h32v32h-32zM0%20480h32v32h-32zM0%20640h32v32h-32zM0%20672h32v32h-32zM0%20704h32v32h-32zM0%20736h32v32h-32zM0%20800h32v32h-32zM0%20832h32v32h-32zM0%20928h32v32h-32zM0%20960h32v32h-32zM0%201024h32v32h-32zM0%201056h32v32h-32zM0%201120h32v32h-32zM0%201280h32v32h-32zM0%201312h32v32h-32zM0%201344h32v32h-32zM0%201600h32v32h-32zM0%201728h32v32h-32zM0%201760h32v32h-32zM0%201792h32v32h-32zM0%201888h32v32h-32zM0%201920h32v32h-32zM0%201952h32v32h-32zM32%200h32v32h-32zM32%20192h32v32h-32zM32%20224h32v32h-32zM32%20288h32v32h-32zM32%20384h32v32h-32zM32%20448h32v32h-32zM32%20544h32v32h-32zM32%20640h32v32h-32zM32%20736h32v32h-32zM32%20768h32v32h-32zM32%201024h32v32h-32zM32%201056h32v32h-32zM32%201152h32v32h-32zM32%201280h32v32h-32zM32%201504h32v32h-32zM32%201600h32v32h-32zM32%201664h32v32h-32zM32%201696h32v32h-32zM32%201984h32v32h-32zM32%202016h32v32h-32zM64%20128h32v32h-32zM64%20160h32v32h-32zM64%20224h32v32h-32zM64%20352h32v32h-32zM64%20672h32v32h-32zM64%201216h32v32h-32zM64%201344h32v32h-32zM64%201408h32v32h-32zM64%201504h32v32h-32zM64%201568h32v32h-32zM64%201600h32v32h-32zM64%201664h32v32h-32zM64%201792h32v32h-32zM64%201856h32v32h-32zM64%201920h32v32h-32zM96%200h32v32h-32zM96%20160h32v32h-32zM96%20192h32v32h-32zM96%20224h32v32h-32zM96%20352h32v32h-32zM96%20448h32v32h-32zM96%20480h32v32h-32zM96%20512h32v32h-32zM96%20576h32v32h-32zM96%20672h32v32h-32zM96%20736h32v32h-32zM96%20928h32v32h-32zM96%20992h32v32h-32zM96%201024h32v32h-32zM96%201056h32v32h-32zM96%201184h32v32h-32zM96%201408h32v32h-32zM96%201696h32v32h-32zM96%202016h32v32h-32zM128%20160h32v32h-32zM128%20320h32v32h-32zM128%20544h32v32h-32zM128%20640h32v32h-32zM128%20704h32v32h-32zM128%20736h32v32h-32zM128%20832h32v32h-32zM128%201088h32v32h-32zM128%201184h32v32h-32zM128%201216h32v32h-32zM128%201312h32v32h-32zM128%201344h32v32h-32zM128%201600h32v32h-32zM128%201696h32v32h-32zM128%202016h32v32h-32zM160%2096h32v32h-32zM160%20384h32v32h-32zM160%20416h32v32h-32zM160%20576h32v32h-32zM160%20608h32v32h-32zM160%20640h32v32h-32zM160%20800h32v32h-32zM160%20832h32v32h-32zM160%20992h32v32h-32zM160%201088h32v32h-32zM160%201184h32v32h-32zM160%201248h32v32h-32zM160%201312h32v32h-32zM160%201504h32v32h-32zM160%201536h32v32h-32zM160%201568h32v32h-32zM160%201664h32v32h-32zM160%201728h32v32h-32zM160%201888h32v32h-32zM192%2064h32v32h-32zM192%20128h32v32h-32zM192%20224h32v32h-32zM192%20384h32v32h-32zM192%20416h32v32h-32zM192%20480h32v32h-32zM192%20576h32v32h-32zM192%20640h32v32h-32zM192%20832h32v32h-32zM192%20992h32v32h-32zM192%201216h32v32h-32zM192%201312h32v32h-32zM192%201472h32v32h-32zM192%201504h32v32h-32zM192%201664h32v32h-32zM192%201792h32v32h-32zM224%2064h32v32h-32zM224%20544h32v32h-32zM224%20608h32v32h-32zM224%20672h32v32h-32zM224%20704h32v32h-32zM224%201056h32v32h-32zM224%201440h32v32h-32zM224%201536h32v32h-32zM224%201728h32v32h-32zM224%201792h32v32h-32zM224%201952h32v32h-32zM224%201984h32v32h-32zM224%202016h32v32h-32zM256%20224h32v32h-32zM256%20512h32v32h-32zM256%20704h32v32h-32zM256%20800h32v32h-32zM256%20864h32v32h-32zM256%201120h32v32h-32zM256%201280h32v32h-32zM256%201344h32v32h-32zM256%201504h32v32h-32zM256%201600h32v32h-32zM256%201696h32v32h-32zM256%201792h32v32h-32zM288%2032h32v32h-32zM288%20576h32v32h-32zM288%20640h32v32h-32zM288%201184h32v32h-32zM288%201536h32v32h-32zM288%201952h32v32h-32zM320%200h32v32h-32zM320%20160h32v32h-32zM320%20256h32v32h-32zM320%20352h32v32h-32zM320%20416h32v32h-32zM320%20928h32v32h-32zM320%20992h32v32h-32zM320%201088h32v32h-32zM320%201120h32v32h-32zM320%201376h32v32h-32zM320%201440h32v32h-32zM320%201632h32v32h-32zM320%201792h32v32h-32zM320%201856h32v32h-32zM352%20288h32v32h-32zM352%20864h32v32h-32zM352%201472h32v32h-32zM352%201568h32v32h-32zM352%201632h32v32h-32zM352%201696h32v32h-32zM352%201760h32v32h-32zM352%201984h32v32h-32zM384%20224h32v32h-32zM384%20256h32v32h-32zM384%20384h32v32h-32zM384%20768h32v32h-32zM384%201088h32v32h-32zM384%201248h32v32h-32zM416%2032h32v32h-32zM416%2096h32v32h-32zM416%20960h32v32h-32zM416%201184h32v32h-32zM416%201312h32v32h-32zM416%201504h32v32h-32zM416%201536h32v32h-32zM416%202016h32v32h-32zM448%20288h32v32h-32zM448%20320h32v32h-32zM448%20384h32v32h-32zM448%20480h32v32h-32zM448%201344h32v32h-32zM448%201376h32v32h-32zM448%201440h32v32h-32zM448%201568h32v32h-32zM448%201888h32v32h-32zM480%200h32v32h-32zM480%20768h32v32h-32zM480%20832h32v32h-32zM480%20896h32v32h-32zM480%201312h32v32h-32zM480%201472h32v32h-32zM480%201824h32v32h-32zM480%201952h32v32h-32zM512%20192h32v32h-32zM512%20448h32v32h-32zM512%20512h32v32h-32zM512%20544h32v32h-32zM512%201760h32v32h-32zM512%201888h32v32h-32zM544%20224h32v32h-32zM544%20288h32v32h-32zM544%201376h32v32h-32zM544%201536h32v32h-32zM544%201600h32v32h-32zM544%201760h32v32h-32zM576%20672h32v32h-32zM576%201856h32v32h-32zM608%20128h32v32h-32zM608%20160h32v32h-32zM608%20288h32v32h-32zM608%20672h32v32h-32zM608%20704h32v32h-32zM608%201184h32v32h-32zM608%201376h32v32h-32zM608%201760h32v32h-32zM608%202016h32v32h-32zM640%20512h32v32h-32zM640%20640h32v32h-32zM640%20800h32v32h-32zM640%20864h32v32h-32zM640%20960h32v32h-32zM640%201120h32v32h-32zM640%201376h32v32h-32zM640%201600h32v32h-32zM640%201664h32v32h-32zM672%20832h32v32h-32zM672%201184h32v32h-32zM672%201248h32v32h-32zM672%201440h32v32h-32zM704%20736h32v32h-32zM704%201184h32v32h-32zM704%201280h32v32h-32zM704%201440h32v32h-32zM704%201696h32v32h-32zM704%201888h32v32h-32zM704%201920h32v32h-32zM736%201952h32v32h-32zM768%20288h32v32h-32zM768%201088h32v32h-32zM800%2096h32v32h-32zM800%20160h32v32h-32zM800%20704h32v32h-32zM800%201536h32v32h-32zM800%201792h32v32h-32zM800%201888h32v32h-32zM832%20768h32v32h-32zM832%201408h32v32h-32zM832%201888h32v32h-32zM864%201664h32v32h-32zM864%201984h32v32h-32zM896%20832h32v32h-32zM896%201728h32v32h-32zM928%201632h32v32h-32zM928%201696h32v32h-32zM928%201856h32v32h-32zM960%20288h32v32h-32zM960%201344h32v32h-32zM960%201472h32v32h-32zM960%201696h32v32h-32zM960%201792h32v32h-32zM1024%201344h32v32h-32zM1088%201280h32v32h-32zM1088%201760h32v32h-32zM1088%201824h32v32h-32zM1120%200h32v32h-32zM1120%201088h32v32h-32zM1152%2064h32v32h-32zM1152%201504h32v32h-32zM1216%201888h32v32h-32zM1248%20960h32v32h-32zM1248%201216h32v32h-32zM1312%20416h32v32h-32zM1312%20768h32v32h-32zM1376%2096h32v32h-32zM1376%201472h32v32h-32zM1408%201568h32v32h-32zM1696%201088h32v32h-32z%27%20fill%3D%27%23268199%27%20opacity%3D%270.20%27%2F%3E%3C%2Fsvg%3E");
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-size: auto, auto, 100% 100%, 2400px 2048px;
+  background-repeat: repeat, repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+
+body#top.dark {
+  background-color: #15181e;
+  background-image:
+    repeating-linear-gradient(to right,  rgba(255,255,255,0.035) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0 1px, transparent 1px 32px),
+    linear-gradient(to right, rgba(21, 24, 30, 0) 0%, rgba(21, 24, 30, 1) 34%),
+    url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%272400%27%20height%3D%272048%27%20viewBox%3D%270%200%202400%202048%27%3E%3Cpath%20d%3D%27M0%20160h32v32h-32zM0%20192h32v32h-32zM0%20256h32v32h-32zM0%20288h32v32h-32zM0%20320h32v32h-32zM0%20480h32v32h-32zM0%20640h32v32h-32zM0%20672h32v32h-32zM0%20704h32v32h-32zM0%20736h32v32h-32zM0%20800h32v32h-32zM0%20832h32v32h-32zM0%20928h32v32h-32zM0%20960h32v32h-32zM0%201024h32v32h-32zM0%201056h32v32h-32zM0%201120h32v32h-32zM0%201280h32v32h-32zM0%201312h32v32h-32zM0%201344h32v32h-32zM0%201600h32v32h-32zM0%201728h32v32h-32zM0%201760h32v32h-32zM0%201792h32v32h-32zM0%201888h32v32h-32zM0%201920h32v32h-32zM0%201952h32v32h-32zM32%200h32v32h-32zM32%20192h32v32h-32zM32%20224h32v32h-32zM32%20288h32v32h-32zM32%20384h32v32h-32zM32%20448h32v32h-32zM32%20544h32v32h-32zM32%20640h32v32h-32zM32%20736h32v32h-32zM32%20768h32v32h-32zM32%201024h32v32h-32zM32%201056h32v32h-32zM32%201152h32v32h-32zM32%201280h32v32h-32zM32%201504h32v32h-32zM32%201600h32v32h-32zM32%201664h32v32h-32zM32%201696h32v32h-32zM32%201984h32v32h-32zM32%202016h32v32h-32zM64%20128h32v32h-32zM64%20160h32v32h-32zM64%20224h32v32h-32zM64%20352h32v32h-32zM64%20672h32v32h-32zM64%201216h32v32h-32zM64%201344h32v32h-32zM64%201408h32v32h-32zM64%201504h32v32h-32zM64%201568h32v32h-32zM64%201600h32v32h-32zM64%201664h32v32h-32zM64%201792h32v32h-32zM64%201856h32v32h-32zM64%201920h32v32h-32zM96%200h32v32h-32zM96%20160h32v32h-32zM96%20192h32v32h-32zM96%20224h32v32h-32zM96%20352h32v32h-32zM96%20448h32v32h-32zM96%20480h32v32h-32zM96%20512h32v32h-32zM96%20576h32v32h-32zM96%20672h32v32h-32zM96%20736h32v32h-32zM96%20928h32v32h-32zM96%20992h32v32h-32zM96%201024h32v32h-32zM96%201056h32v32h-32zM96%201184h32v32h-32zM96%201408h32v32h-32zM96%201696h32v32h-32zM96%202016h32v32h-32zM128%20160h32v32h-32zM128%20320h32v32h-32zM128%20544h32v32h-32zM128%20640h32v32h-32zM128%20704h32v32h-32zM128%20736h32v32h-32zM128%20832h32v32h-32zM128%201088h32v32h-32zM128%201184h32v32h-32zM128%201216h32v32h-32zM128%201312h32v32h-32zM128%201344h32v32h-32zM128%201600h32v32h-32zM128%201696h32v32h-32zM128%202016h32v32h-32zM160%2096h32v32h-32zM160%20384h32v32h-32zM160%20416h32v32h-32zM160%20576h32v32h-32zM160%20608h32v32h-32zM160%20640h32v32h-32zM160%20800h32v32h-32zM160%20832h32v32h-32zM160%20992h32v32h-32zM160%201088h32v32h-32zM160%201184h32v32h-32zM160%201248h32v32h-32zM160%201312h32v32h-32zM160%201504h32v32h-32zM160%201536h32v32h-32zM160%201568h32v32h-32zM160%201664h32v32h-32zM160%201728h32v32h-32zM160%201888h32v32h-32zM192%2064h32v32h-32zM192%20128h32v32h-32zM192%20224h32v32h-32zM192%20384h32v32h-32zM192%20416h32v32h-32zM192%20480h32v32h-32zM192%20576h32v32h-32zM192%20640h32v32h-32zM192%20832h32v32h-32zM192%20992h32v32h-32zM192%201216h32v32h-32zM192%201312h32v32h-32zM192%201472h32v32h-32zM192%201504h32v32h-32zM192%201664h32v32h-32zM192%201792h32v32h-32zM224%2064h32v32h-32zM224%20544h32v32h-32zM224%20608h32v32h-32zM224%20672h32v32h-32zM224%20704h32v32h-32zM224%201056h32v32h-32zM224%201440h32v32h-32zM224%201536h32v32h-32zM224%201728h32v32h-32zM224%201792h32v32h-32zM224%201952h32v32h-32zM224%201984h32v32h-32zM224%202016h32v32h-32zM256%20224h32v32h-32zM256%20512h32v32h-32zM256%20704h32v32h-32zM256%20800h32v32h-32zM256%20864h32v32h-32zM256%201120h32v32h-32zM256%201280h32v32h-32zM256%201344h32v32h-32zM256%201504h32v32h-32zM256%201600h32v32h-32zM256%201696h32v32h-32zM256%201792h32v32h-32zM288%2032h32v32h-32zM288%20576h32v32h-32zM288%20640h32v32h-32zM288%201184h32v32h-32zM288%201536h32v32h-32zM288%201952h32v32h-32zM320%200h32v32h-32zM320%20160h32v32h-32zM320%20256h32v32h-32zM320%20352h32v32h-32zM320%20416h32v32h-32zM320%20928h32v32h-32zM320%20992h32v32h-32zM320%201088h32v32h-32zM320%201120h32v32h-32zM320%201376h32v32h-32zM320%201440h32v32h-32zM320%201632h32v32h-32zM320%201792h32v32h-32zM320%201856h32v32h-32zM352%20288h32v32h-32zM352%20864h32v32h-32zM352%201472h32v32h-32zM352%201568h32v32h-32zM352%201632h32v32h-32zM352%201696h32v32h-32zM352%201760h32v32h-32zM352%201984h32v32h-32zM384%20224h32v32h-32zM384%20256h32v32h-32zM384%20384h32v32h-32zM384%20768h32v32h-32zM384%201088h32v32h-32zM384%201248h32v32h-32zM416%2032h32v32h-32zM416%2096h32v32h-32zM416%20960h32v32h-32zM416%201184h32v32h-32zM416%201312h32v32h-32zM416%201504h32v32h-32zM416%201536h32v32h-32zM416%202016h32v32h-32zM448%20288h32v32h-32zM448%20320h32v32h-32zM448%20384h32v32h-32zM448%20480h32v32h-32zM448%201344h32v32h-32zM448%201376h32v32h-32zM448%201440h32v32h-32zM448%201568h32v32h-32zM448%201888h32v32h-32zM480%200h32v32h-32zM480%20768h32v32h-32zM480%20832h32v32h-32zM480%20896h32v32h-32zM480%201312h32v32h-32zM480%201472h32v32h-32zM480%201824h32v32h-32zM480%201952h32v32h-32zM512%20192h32v32h-32zM512%20448h32v32h-32zM512%20512h32v32h-32zM512%20544h32v32h-32zM512%201760h32v32h-32zM512%201888h32v32h-32zM544%20224h32v32h-32zM544%20288h32v32h-32zM544%201376h32v32h-32zM544%201536h32v32h-32zM544%201600h32v32h-32zM544%201760h32v32h-32zM576%20672h32v32h-32zM576%201856h32v32h-32zM608%20128h32v32h-32zM608%20160h32v32h-32zM608%20288h32v32h-32zM608%20672h32v32h-32zM608%20704h32v32h-32zM608%201184h32v32h-32zM608%201376h32v32h-32zM608%201760h32v32h-32zM608%202016h32v32h-32zM640%20512h32v32h-32zM640%20640h32v32h-32zM640%20800h32v32h-32zM640%20864h32v32h-32zM640%20960h32v32h-32zM640%201120h32v32h-32zM640%201376h32v32h-32zM640%201600h32v32h-32zM640%201664h32v32h-32zM672%20832h32v32h-32zM672%201184h32v32h-32zM672%201248h32v32h-32zM672%201440h32v32h-32zM704%20736h32v32h-32zM704%201184h32v32h-32zM704%201280h32v32h-32zM704%201440h32v32h-32zM704%201696h32v32h-32zM704%201888h32v32h-32zM704%201920h32v32h-32zM736%201952h32v32h-32zM768%20288h32v32h-32zM768%201088h32v32h-32zM800%2096h32v32h-32zM800%20160h32v32h-32zM800%20704h32v32h-32zM800%201536h32v32h-32zM800%201792h32v32h-32zM800%201888h32v32h-32zM832%20768h32v32h-32zM832%201408h32v32h-32zM832%201888h32v32h-32zM864%201664h32v32h-32zM864%201984h32v32h-32zM896%20832h32v32h-32zM896%201728h32v32h-32zM928%201632h32v32h-32zM928%201696h32v32h-32zM928%201856h32v32h-32zM960%20288h32v32h-32zM960%201344h32v32h-32zM960%201472h32v32h-32zM960%201696h32v32h-32zM960%201792h32v32h-32zM1024%201344h32v32h-32zM1088%201280h32v32h-32zM1088%201760h32v32h-32zM1088%201824h32v32h-32zM1120%200h32v32h-32zM1120%201088h32v32h-32zM1152%2064h32v32h-32zM1152%201504h32v32h-32zM1216%201888h32v32h-32zM1248%20960h32v32h-32zM1248%201216h32v32h-32zM1312%20416h32v32h-32zM1312%20768h32v32h-32zM1376%2096h32v32h-32zM1376%201472h32v32h-32zM1408%201568h32v32h-32zM1696%201088h32v32h-32z%27%20fill%3D%27%233f9dbd%27%20opacity%3D%270.26%27%2F%3E%3C%2Fsvg%3E");
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-size: auto, auto, 100% 100%, 2400px 2048px;
+  background-repeat: repeat, repeat, no-repeat, repeat;
+  background-attachment: fixed, fixed, fixed, fixed;
+}
+
+.home-section,
+.home-section:nth-of-type(even),
+.dark .home-section,
+.dark .home-section:nth-of-type(even) {
+  background-color: transparent;
+}
+
+/* =========================================================================
+   9. NAVBAR, CV BADGE, CONTACT
+   ========================================================================= */
+
+/* The bar was a solid grey slab; now it lets the page show through. */
+.navbar {
+  background: rgba(33, 37, 41, 0.72);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  box-shadow: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.10);
+}
+
+.dark .navbar {
+  background: rgba(19, 22, 28, 0.66);
+  box-shadow: none;
+}
+
+/* The theme paints .navbar-collapse solid #212529, but only inside
+   @media (max-width: 991.98px) — it is the mobile dropdown panel. Overriding
+   it unscoped put an opaque slab behind the desktop links, which is why the
+   bar read as solid grey however transparent .navbar itself was.
+   So: same breakpoint, and let the desktop links sit on the blurred navbar. */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: rgba(21, 24, 30, 0.92) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* CV: a pixel badge rather than a glyph, so it reads as a label. */
+/* Just the letters — no box, so it sits with the other glyph icons. */
+.cv-icon {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+.network-icon li a:hover .cv-icon { color: var(--accent); }
+
+/* Address is written out rather than linked — no mailto for scrapers to read. */
+.email-obfuscated {
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  opacity: 0.88;
+  word-break: break-word;
+}
+
+/* =========================================================================
+   10. VIDEO CARDS
+   A work-project card can lead with a YouTube video instead of a still.
+   Nothing is downloaded or embedded: the card holds a plain link that opens
+   YouTube in a new tab, over a thumbnail hotlinked from img.youtube.com.
+
+   To add one: put this inside .card, above .card-text, and swap VIDEO_ID.
+
+     <a class="card-image video-thumb" target="_blank" rel="noopener"
+        href="https://www.youtube.com/watch?v=VIDEO_ID">
+       <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
+            alt="..." class="img-responsive">
+       <span class="play-badge" aria-hidden="true"></span>
+     </a>
+
+   maxresdefault.jpg is not guaranteed to exist for every video; fall back
+   to hqdefault.jpg if it 404s.
+   ========================================================================= */
+
+.video-thumb {
+  display: block;
+  position: relative;
+  line-height: 0;
+}
+
+/* Video stills are 16:9 — show the whole frame rather than cropping to a
+   fixed height the way the project stills do. */
+.project-card .card .video-thumb img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.video-thumb .play-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 40px;
+  background-color: rgba(19, 22, 28, 0.78);
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%206%2011%27%20shape-rendering%3D%27crispEdges%27%3E%3Cg%20fill%3D%27%23f8f8f2%27%3E%3Crect%20x%3D%270%27%20y%3D%270%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%271%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%273%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%274%27%20y%3D%274%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%274%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%275%27%20y%3D%275%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%274%27%20y%3D%276%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%273%27%20y%3D%277%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%278%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%279%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%271%27%20y%3D%279%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3Crect%20x%3D%270%27%20y%3D%2710%27%20width%3D%271%27%20height%3D%271%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: 54% 50%;
+  background-size: 13px auto;
+  border: 3px solid #f8f8f2;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.video-thumb:hover .play-badge {
+  background-color: var(--accent);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+/* The card lift would fight the badge's own transform — keep them separate. */
+.project-card .card:hover .video-thumb img { opacity: 0.92; }
+
+/* =========================================================================
+   11. NESTED 8-BIT WINDOWS
+   Secondary items living inside a project card — styled as little retro OS
+   windows so they read as attachments to the parent project rather than as
+   projects of their own.
+   ========================================================================= */
+
+/* A card carrying nested windows takes the full row. */
+.project-card.pj-wide { width: 100% !important; }
+
+.win-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 2px dashed var(--card-border);
+}
+
+/* Label spans the grid so the windows below stay in their own columns. */
+.win-grid-label {
+  grid-column: 1 / -1;
+  font-family: var(--font-pixel);
+  font-size: 0.52rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--label);
+  margin-bottom: 0.1rem;
+}
+
+.win8 {
+  border: 2px solid var(--pixel-edge);
+  background: var(--card-bg);
+  box-shadow: 3px 3px 0 var(--pixel-shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.win8:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--pixel-shadow);
+}
+
+.win8-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 6px;
+  background: var(--accent);
+  border-bottom: 2px solid var(--pixel-edge);
+}
+
+.win8-title {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: #fff;
+}
+
+.win8-btns { display: flex; gap: 3px; flex: 0 0 auto; }
+.win8-btns i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  background: #f4f4ef;
+  border: 1px solid rgba(0, 0, 0, 0.55);
+}
+
+.win8-body { display: block; }
+.win8-body:hover { text-decoration: none; }
+
+.win8-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 2px solid var(--pixel-edge);
+}
+
+.win8-caption {
+  display: block;
+  padding: 8px 9px 9px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: var(--body-text);
+}
+
+.win8-caption strong { color: var(--accent); }
+
+/* The parent card already lifts on hover; a nested window must not inherit
+   the parent's title styling or it competes with the project title. */
+.project-card .card .win-grid a { color: inherit; border-bottom: none; }
+
+/* =========================================================================
+   12. SCENE PANEL + PUBLICATION GROUPS
+   ========================================================================= */
+
+/* The project scene is drawn live on a canvas (js/phd-scene.js): GP samples
+   plus a rotating coastline point cloud. Fixed aspect so the card's rectangle
+   is filled at every width, and so the canvas has a size before JS runs. */
+.scene-image {
+  display: block;
+  position: relative;
+  line-height: 0;
+  border-bottom: 2px solid var(--pixel-edge);
+  background: #12151b;
+}
+
+.scene-image canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 10 / 3;
+  height: auto;
+}
+
+@media (max-width: 575px) {
+  .scene-image canvas { aspect-ratio: 5 / 3; }
+}
+
+/* ---- group headings inside a section ----------------------------------- */
+
+.pub-group-label {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--label);
+  margin: 0 0 1.1rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 2px dashed var(--card-border);
+}
+
+.pub-group-label + .pub-grid { margin-bottom: 2.6rem; }
+
+/* ---- "Other": a compact list, deliberately quieter than the cards ------ */
+
+.pub-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pub-rows li {
+  position: relative;
+  padding: 0.85rem 0 0.9rem 1.5rem;
+  border-bottom: 1px dashed var(--card-border);
+}
+
+.pub-rows li:last-child { border-bottom: none; }
+
+/* pixel bullet */
+.pub-rows li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.15rem;
+  width: 7px;
+  height: 7px;
+  background: var(--accent);
+}
+
+.pub-row-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.pub-row-title a { color: inherit; }
+.pub-row-title a:hover { color: var(--accent); }
+
+.pub-row-authors {
+  font-size: 0.76rem;
+  line-height: 1.5;
+  margin-top: 0.2rem;
+  color: var(--label);
+}
+
+.pub-row-venue {
+  font-size: 0.76rem;
+  margin-top: 0.25rem;
+  color: var(--body-text);
+}
+
+.pub-row-venue a {
+  color: var(--accent);
+  border-bottom: 1px dotted var(--accent);
+}
+
+/* =========================================================================
+   13. PUBLICATION TAGS + FILTER
+   ========================================================================= */
+
+.pub-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 0.55rem;
+}
+
+.pub-tag {
+  font-family: var(--font-pixel);
+  font-size: 0.46rem;
+  line-height: 1;
+  letter-spacing: 0;
+  padding: 5px 6px 4px;
+  border: 2px solid currentColor;
+  color: var(--label);
+}
+
+.pub-tag-ml        { color: #d06e74; }
+.pub-tag-bio       { color: #6fbf73; }
+.pub-tag-neurotech { color: #268199; }
+
+.dark .pub-tag-neurotech { color: #4fb3cc; }
+
+/* The filter bar reuses the project-filter pills, tightened up. */
+.pub-filters { margin-bottom: 1.4rem; }
+.pub-filters .btn-primary { font-size: 0.55rem; padding: 0.45rem 0.85rem; }
+
+/* Rows the filter has hidden must not leave their dashed separator behind. */
+.pub-rows li[hidden] { display: none !important; }
+
+/* =========================================================================
+   14. MOTIF ICONS + SMALLER HIGHLIGHTED CARD
+   ========================================================================= */
+
+/* The DNA / chip / sensor / network sprites, retired from the background
+   and used as a second, quieter icon row under the social links. */
+.motif-icons {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 0.85rem 0 0;
+  padding: 0;
+}
+
+.motif-icons li { line-height: 0; }
+
+.motif-icons .motif {
+  display: block;
+  height: 27px;
+  width: auto;
+  opacity: 0.85;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.motif-icons li:hover .motif { opacity: 1; transform: translateY(-2px); }
+
+.motif-icons li:nth-child(1) .motif { color: #6fbf73; }   /* DNA      */
+.motif-icons li:nth-child(2) .motif { color: #d06e74; }   /* chip     */
+.motif-icons li:nth-child(3) .motif { color: #e0b341; }   /* sensor   */
+.motif-icons li:nth-child(4) .motif { color: #268199; }   /* network  */
+.dark .motif-icons li:nth-child(4) .motif { color: #4fb3cc; }
+
+/* Only one highlighted publication, so a full-width card oversells it. */
+.pub-group-label + .pub-grid {
+  max-width: 560px;
+  margin-bottom: 2.4rem;
+}
+
+.pub-grid .media.stream-item .article-title { font-size: 0.94rem; }
+.pub-grid .media.stream-item .article-style { font-size: 0.78rem; }
+.pub-grid .media.stream-item > .media-body   { padding: 1rem 1.1rem 1.1rem; }
+
+/* =========================================================================
+   15. SCENE OVERLAY — kernel switch, equation, lengthscale slider
+   ========================================================================= */
+
+/* Real markup rather than canvas text, so the maths stays crisp at any size
+   and the buttons are focusable and readable by assistive tech. */
+
+.scene-ui {
+  position: absolute;
+  left: 16px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.kernel-switch { display: flex; gap: 7px; }
+
+.kernel-ctl {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 1px;
+  pointer-events: auto;
+}
+
+.ell-tag {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  color: rgba(228, 240, 246, 0.72);
+  cursor: pointer;
+}
+.ell-tag i { font-style: italic; }
+
+.ell-val {
+  font-family: var(--font-pixel);
+  font-size: 0.46rem;
+  color: rgba(228, 240, 246, 0.66);
+  min-width: 26px;          /* stops the row jittering as digits change */
+}
+
+/* Square track and thumb, hard shadow — the range input in 8-bit dress. */
+.ell-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 92px;
+  height: 14px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ell-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: rgba(228, 240, 246, 0.20);
+  border: 2px solid rgba(228, 240, 246, 0.30);
+}
+.ell-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 14px;
+  margin-top: -4px;
+  background: #4fb3cc;
+  border: 2px solid #0f1216;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+}
+
+.ell-slider::-moz-range-track {
+  height: 6px;
+  background: rgba(228, 240, 246, 0.20);
+  border: 2px solid rgba(228, 240, 246, 0.30);
+}
+.ell-slider::-moz-range-thumb {
+  width: 10px;
+  height: 14px;
+  border-radius: 0;
+  background: #4fb3cc;
+  border: 2px solid #0f1216;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55);
+}
+
+.ell-slider:focus-visible { outline: 2px solid #6fc6dc; outline-offset: 3px; }
+
+.kbtn {
+  font-family: var(--font-pixel);
+  font-size: 0.5rem;
+  line-height: 1;
+  letter-spacing: 0;
+  padding: 7px 8px 6px;
+  color: rgba(228, 240, 246, 0.72);
+  background: rgba(18, 21, 27, 0.85);
+  border: 2px solid rgba(228, 240, 246, 0.32);
+  border-radius: 0;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease,
+              background 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+}
+
+.kbtn:hover { color: #fff; border-color: #4fb3cc; }
+
+.kbtn.is-on {
+  background: #268199;
+  border-color: #4fb3cc;
+  color: #fff;
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.55);
+}
+
+.kbtn:focus-visible { outline: 2px solid #6fc6dc; outline-offset: 2px; }
+
+.scene-eq {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: rgba(228, 240, 246, 0.66);
+  pointer-events: none;
+  user-select: none;
+}
+
+.scene-eq i   { font-style: italic; }
+.scene-eq sub { font-size: 0.66em; font-style: italic; }
+.scene-eq sup { font-size: 0.62em; }
+
+/* the exponent: minus sign plus a genuine stacked fraction, lifted together */
+.scene-eq .pow {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 0.74em;
+  line-height: 1;
+  position: relative;
+  top: -0.62em;
+}
+
+.scene-eq .frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.18;
+}
+
+.scene-eq .frac .num {
+  padding: 0 4px 1px;
+  border-bottom: 1px solid currentColor;
+}
+
+.scene-eq .frac .den { padding: 1px 4px 0; }
+
+@media (max-width: 575px) {
+  .scene-ui  { left: 10px; bottom: 8px; gap: 6px; }
+  .ell-slider { width: 68px; }
+  .scene-eq  { font-size: 0.74rem; }
+  .kbtn      { font-size: 0.42rem; padding: 5px 6px 4px; }
+}
+
+/* =========================================================================
+   16. FILTER PILL COLOURS
+   The theme ships, with !important:
+     .btn-toolbar .btn.btn-primary.active { background-color:#069 !important }
+   When both sides are !important, specificity decides — and that selector is
+   (0,4,0). A rule like `.pub-filters [data-pubfilter="ml"].active` is only
+   (0,3,0), so it loses and just the border changes. Hence the long selectors
+   below: they are (0,5,0) and (0,6,0). Do not shorten them.
+   ========================================================================= */
+
+.project-toolbar .btn-toolbar .btn.btn-primary:hover,
+.project-toolbar .btn-toolbar .btn.btn-primary.active {
+  background-color: #268199 !important;
+  border-color: #4fb3cc;
+  color: #ffffff;
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="ml"]:hover,
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="ml"].active {
+  background-color: #d06e74 !important;
+  border-color: #e29aa0;
+  color: #14171d;
+  box-shadow: 3px 3px 0 rgba(208, 110, 116, 0.42);
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="ml"].active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(208, 110, 116, 0.58);
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="bio"]:hover,
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="bio"].active {
+  background-color: #6fbf73 !important;
+  border-color: #9ad79d;
+  color: #14171d;
+  box-shadow: 3px 3px 0 rgba(111, 191, 115, 0.42);
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="bio"].active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(111, 191, 115, 0.58);
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="neurotech"]:hover,
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="neurotech"].active {
+  background-color: #268199 !important;
+  border-color: #4fb3cc;
+  color: #ffffff;
+  box-shadow: 3px 3px 0 rgba(38, 129, 153, 0.42);
+}
+
+.pub-filters .btn-toolbar .btn.btn-primary[data-pubfilter="neurotech"].active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 rgba(38, 129, 153, 0.58);
+}
+

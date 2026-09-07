@@ -1,0 +1,26 @@
+# This repo IS the published site — images, PDFs, CSS and JS are content and
+# must be committed. Only genuine junk belongs here.
+
+# local scratch notes
+TODO.local.md
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# merge / patch leftovers
+*.orig
+*.rej
+
+# stray archives and env files
+*.log
+.env
+.env.*
